@@ -52,6 +52,19 @@ public class MeetingRoomDiary {
     }
 
     /**
+     * Books a meeting room for the given meeting. The method attempts to find a room that is
+     * immediately available for the specified meeting time. If no such room is found, it selects
+     * the room with the earliest future availability and schedules the meeting there.
+     *
+     * @param meeting the meeting to be booked, containing its start and end time
+     */
+    private void bookMeetingRoom(Meeting meeting) {
+        findAvailableRoom(meeting)
+                .orElse(findRoomWithEarliestAvailability())
+                .addMeeting(meeting);
+    }
+
+    /**
      * Simulates booking all provided meetings into available rooms and returns the most used room.
      * For each meeting, attempts to find an available room; if none available, uses the room
      * with earliest availability. Then returns the room with the highest number of meetings
@@ -62,12 +75,9 @@ public class MeetingRoomDiary {
      * @throws RuntimeException if no rooms are available (empty list)
      */
     public MeetingRoom mostUsed(List<Meeting> meetings) {
-        meetings.forEach(meeting ->
-            findAvailableRoom(meeting)
-                    .orElse(findRoomWithEarliestAvailability())
-                    // side effect: updates the room. If you don't want to do this, you should
-                    // implement in a inimitable way (create new instances of rooms when modifying them)
-                    .addMeeting(meeting));
+        // side effect: diary updated with the rooms. Clone diary if you want to
+        // keep this instance unchanged.
+        meetings.forEach(this::bookMeetingRoom);
         return rooms.stream().max(MeetingRoom::compareByNumberOfMeetingsAndId)
                              .orElseThrow();
     }
