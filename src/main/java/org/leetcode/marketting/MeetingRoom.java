@@ -26,6 +26,16 @@ public class MeetingRoom {
         this.lastMeetingEndTime = lastMeetingEndTime;
     }
 
+    /**
+     * Constructs a new MeetingRoom with the specified ID. The initial number of meetings
+     * and the last meeting end time default to 0.
+     *
+     * @param id the unique identifier for the room
+     */
+    public MeetingRoom(int id) {
+       this(id,0,0);
+    }
+
     public int getId() {
         return id;
     }

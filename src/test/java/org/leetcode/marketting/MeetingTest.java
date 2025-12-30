@@ -16,7 +16,7 @@ public class MeetingTest {
     @Test
     public void testToMeeting() {
         int[] meetingTime = {8, 12};
-        Meeting meeting = Meeting.toMeeting(meetingTime);
+        Meeting meeting = new Meeting(meetingTime);
         assertEquals(8, meeting.startTime());
         assertEquals(12, meeting.endTime());
     }

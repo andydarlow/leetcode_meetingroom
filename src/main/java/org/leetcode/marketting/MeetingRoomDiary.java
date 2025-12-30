@@ -21,7 +21,7 @@ public class MeetingRoomDiary {
      */
     public MeetingRoomDiary(int numberOfRooms) {
         rooms = IntStream.range(0, numberOfRooms)
-                .mapToObj(roomId -> new MeetingRoom(roomId, 0, 0))
+                .mapToObj(MeetingRoom::new)
                 .toList();
     }
 

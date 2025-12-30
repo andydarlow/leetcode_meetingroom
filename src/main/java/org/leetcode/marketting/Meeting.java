@@ -10,10 +10,9 @@ public record Meeting(int startTime, int endTime) {
      * new instance of Meeting from a tuple of (startTime, endTime)
      *
      * @param meetingTime tuple of (startTime, endTime)
-     * @return meeting
      */
-    public static Meeting toMeeting(int[] meetingTime) {
-        return new Meeting(meetingTime[0], meetingTime[1]);
+    public Meeting(int[] meetingTime) {
+        this(meetingTime[0], meetingTime[1]);
     }
 
     /**
@@ -27,7 +26,7 @@ public record Meeting(int startTime, int endTime) {
      */
     public static List<Meeting> toMeetings(int[][] meetingTimes) {
         return Arrays.stream(meetingTimes)
-                .map(Meeting::toMeeting)
+                .map(Meeting::new)
                 .sorted(Comparator.comparingInt(meetingA -> meetingA.startTime))
                 .toList();
     }
